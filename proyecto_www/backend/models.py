@@ -23,29 +23,29 @@ class caja (models.Model):
     numero_caja = models.IntegerField(validators=[MaxValueValidator(100)])
     tipo = models.CharField(max_length=20)
 
+class sede_caja (models.Model):
+
+    id_sede = models.ForeignKey(sede,on_delete=models.CASCADE)
+    id_caja = models.ForeignKey(caja,on_delete=models.CASCADE)
+
 class turno (models.Model):
 
     codigo= models.CharField(max_length=5)
     priodidad = models.BooleanField()
     tipo = models.CharField(max_length=20)
-    fecha = models.DateTimeField()
-    id_sede_caja = models.ForeignKey()
-
-class sede_caja (models.Model):
-
-    id_sede = models.ForeignKey()
-    id_caja = models.ForeignKey()
+    fecha = models.DateTimeField(auto_now_add=True)
+    id_sede_caja = models.ForeignKey(sede_caja,on_delete=models.CASCADE)
 
 class atencion (models.Model):
 
-    id_cliente = models.ForeignKey()
-    id_turno = models.ForeignKey()
-    id_sede_caja = models.ForeignKey()
+    id_cliente = models.ForeignKey(cliente,on_delete=models.CASCADE)
+    id_turno = models.ForeignKey(turno,on_delete=models.CASCADE)
+    id_sede_caja = models.ForeignKey(sede_caja,on_delete=models.CASCADE)
 
 class usuario_sede_caja (models.Model):
-    id_usuario = models.ForeignKey()
-    id_sede_caja = models.ForeignKey()
-    fecha = models.DateTimeField()
+    id_usuario = models.ForeignKey(usuario,on_delete=models.CASCADE)
+    id_sede_caja = models.ForeignKey(sede_caja,on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
 
 
 
